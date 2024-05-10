@@ -21,7 +21,7 @@ public class TileView extends View {
     public TileView(TileModel model, Size size) {
         super(model, size);
         this.model = model;
-        //setupDebug();
+        setupDebug();
     }
 
     public void showDebug(boolean status) {
@@ -78,29 +78,5 @@ public class TileView extends View {
         g.setColor(color);
         g.fillRect(0, 0, getCustomSize().getX(), 
                 getCustomSize().getY());
-
-        // Create a rectangle to represent the clipping region
-        var clipBounds = new Rectangle();
-
-        // Iterate over all child components to determine the union of their bounds
-        for (Component comp : getComponents()) {
-            if (comp.isVisible()) {
-                Rectangle bounds = comp.getBounds();
-                clipBounds = clipBounds.union(bounds);
-            }
-        }
-
-        // Set the clipping region to the union of the bounds of all child components
-        ((Graphics2D) g).setClip(clipBounds);
-
-        // Call the layout manager to position and size the child components
-        getLayout().layoutContainer(this);
-
-        // Paint the child components
-        for (Component comp : getComponents()) {
-            if (comp.isVisible()) {
-                comp.paint(g.create(comp.getX(), comp.getY(), comp.getWidth(), comp.getHeight()));
-            }
-        }
     }
 }

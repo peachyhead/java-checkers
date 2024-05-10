@@ -61,7 +61,7 @@ public class MainFrame extends JFrame
         
         c.fill = GridBagConstraints.BOTH;
         c.insets = new Insets(0, 5, 0, 5);
-        c.weightx = 0;
+        c.weightx = 0.6;
         c.weighty = 1;
         contentPanel = gameInstaller.getBoardView();
         parentPane.add(contentPanel, c);
