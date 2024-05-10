@@ -1,7 +1,7 @@
-package src.features.match;
+package src.features.board.piece;
 
-import src.features.board.piece.PieceModel;
 import src.features.board.tile.TileModel;
+import src.features.match.Turn;
 
 public interface IMoveStrategy {
     public void set(PieceModel piece);

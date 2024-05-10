@@ -1,5 +1,6 @@
 package src.base.app.storage;
 
+import lombok.Getter;
 import src.base.log.LogType;
 import src.base.log.Logger;
 import src.base.interfaces.IIdentifiable;
@@ -14,8 +15,9 @@ import java.util.List;
 import java.util.Objects;
 
 public class Storage<T extends IIdentifiable & IInitializable> implements IGeneralStorage {
+    @Getter
     private final List<T> collection = new ArrayList<>();
-    
+
     private final Action onItemAdd = new AbstractAction() {
         @Override
         public void actionPerformed(ActionEvent e) {

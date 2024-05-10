@@ -20,6 +20,7 @@ public class MatchRule implements IInitializable {
         {
             if (matchService.makeMove(currentTurn, tile)) {
                 currentTurn = turnResolver.resolve(currentTurn);
+                matchService.onNewTurn();
             }
         }));
         this.pieceChooseListener = new SignalListener<>("piece_choose", (piece -> {

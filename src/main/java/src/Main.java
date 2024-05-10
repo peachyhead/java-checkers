@@ -9,31 +9,31 @@ import src.base.interfaces.IGameInstaller;
 import src.features.board.BoardInstaller;
 import src.features.checker.CheckerInstaller;
 import src.features.match.MatchInstaller;
+import src.features.narde.NardeInstaller;
 
 import java.util.Arrays;
 
 public class Main {
     
-    private static final Size sideLength = new Size(8, 8);
-    
     public static void main(String[] args) {
-        Logger.setAllowedLogs(LogType.Storage);
+        Logger.setAllowedLogs(LogType.Signal);
         
-        var mainFrame = new MainFrame(sideLength);
-        var storageKeeper = new StorageKeeper();
         var gameInstaller = resolveGameInstaller(args);
-        mainFrame.initialize();
+        var mainFrame = new MainFrame(gameInstaller);
+        var storageKeeper = new StorageKeeper();
         
         BoardInstaller.install(mainFrame, storageKeeper);
         gameInstaller.install();
-        MatchInstaller.install(sideLength, mainFrame.getInfoPanel(), 
+        mainFrame.initialize();
+        MatchInstaller.install(gameInstaller, mainFrame.getInfoPanel(), 
                 gameInstaller.getBoardFillStrategy());
     }
     
     private static IGameInstaller resolveGameInstaller(String[] args){
-        return switch (Arrays.stream(args).findFirst().get()){
-            case "checker" -> new CheckerInstaller();
-            default -> throw new IllegalStateException("Unexpected value: " + 
+        return switch (Arrays.stream(args).findFirst().orElse("")){
+            case "checkers" -> new CheckerInstaller();
+            case "narde" -> new NardeInstaller();
+            default -> throw new IllegalStateException("Can't resolve game: " + 
                     Arrays.stream(args).findFirst().get());
         };
     }

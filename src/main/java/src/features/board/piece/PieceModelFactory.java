@@ -7,7 +7,6 @@ import src.base.app.storage.StorageConnector;
 import src.base.app.storage.StorageKeeper;
 import src.features.checker.CheckerAttackStrategy;
 import src.features.checker.CheckerMoveStrategy;
-import src.features.match.IMoveStrategy;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;

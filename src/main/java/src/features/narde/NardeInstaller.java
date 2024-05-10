@@ -1,44 +1,44 @@
-package src.features.checker;
+package src.features.narde;
 
 import src.UI.BoardView;
 import src.UI.GameInfoPanel;
 import src.base.Size;
 import src.base.interfaces.IGameInstaller;
-import src.features.board.BoardInstaller;
 import src.features.board.BaseBoardFillStrategy;
+import src.features.board.BoardInstaller;
 
 import java.awt.*;
 
-public class CheckerInstaller implements IGameInstaller {
+public class NardeInstaller implements IGameInstaller {
     private static BaseBoardFillStrategy boardFillStrategy;
     
     private BoardView boardView;
     private GameInfoPanel infoPanel;
     
     @Override
-    public void install(){
-        infoPanel = new CheckerInfoPanel();
+    public void install() {
+        infoPanel = new NardeInfoPanel();
         infoPanel.setBackground(Color.GRAY);
-        boardView = new CheckerBoardView(getSideLength());
+        boardView = new NardeBoardView(getSideLength(), getYGap());
         
         var pieceModelFactory = BoardInstaller.getPieceModelFactory();
         var tileModelFactory = BoardInstaller.getTileModelFactory();
-        boardFillStrategy = new CheckerBoardFillStrategy(pieceModelFactory, tileModelFactory);
+        boardFillStrategy = new NardeBoardFillStrategy(pieceModelFactory, tileModelFactory);
     }
 
     @Override
     public BaseBoardFillStrategy getBoardFillStrategy() {
         return boardFillStrategy;
     }
-
+    
     @Override
     public Size getSideLength() {
-        return new Size(8, 8);
+        return new Size(12, 2);
     }
 
     @Override
     public int getYGap() {
-        return 0;
+        return 600;
     }
 
     @Override

@@ -1,8 +1,15 @@
 package src.base.interfaces;
 
-import src.features.board.IBoardFillStrategy;
+import src.UI.BoardView;
+import src.UI.GameInfoPanel;
+import src.base.Size;
+import src.features.board.BaseBoardFillStrategy;
 
 public interface IGameInstaller {
     public void install();
-    public IBoardFillStrategy getBoardFillStrategy();
+    public BaseBoardFillStrategy getBoardFillStrategy();
+    public Size getSideLength();
+    public int getYGap();
+    public GameInfoPanel getGameInfoPanel();
+    public BoardView getBoardView();
 }

@@ -2,39 +2,34 @@ package src.features.checker;
 
 import src.base.Position;
 import src.base.Size;
-import src.features.board.IBoardFillStrategy;
+import src.features.board.BaseBoardFillStrategy;
 import src.features.board.piece.PieceModelArgs;
 import src.features.board.piece.PieceModelFactory;
+import src.features.board.piece.PieceType;
 import src.features.board.tile.ITileStrategy;
 import src.features.board.BoardModel;
-import src.features.board.piece.PieceType;
-import src.features.board.tile.TileModelArgs;
 import src.features.board.tile.TileModelFactory;
 
-public class CheckerBoardFillStrategy implements IBoardFillStrategy {
-    private final TileModelFactory tileModelFactory;
-    private final PieceModelFactory pieceModelFactory;
-
-    public CheckerBoardFillStrategy(PieceModelFactory pieceModelFactory,
+public class CheckerBoardFillStrategy extends BaseBoardFillStrategy {
+    
+    public CheckerBoardFillStrategy(PieceModelFactory pieceModelFactory, 
                                     TileModelFactory tileModelFactory) {
-        this.pieceModelFactory = pieceModelFactory;
-        this.tileModelFactory = tileModelFactory;
+        super(pieceModelFactory, tileModelFactory);
     }
 
+    @Override
     public BoardModel fillTiles(Size sideLength){
         var boardModel = new BoardModel(sideLength.getX(), sideLength.getY());
         for (int x = boardModel.getWidth(); x > 0; x--) {
             for (int y = 1; y < boardModel.getHeight() + 1; y++) {
-                var position = new Position(y, x);
-                var strategy = getTileStrategy();
-                var tile = tileModelFactory.create(new TileModelArgs(strategy, position));
-                boardModel.addTile(tile);
+                createTile(boardModel, new Position(y, x));
             }
         }
         return boardModel;
     }
-    
-    public void fillPieces(BoardModel boardModel){
+
+    @Override
+    public void fillPieces(BoardModel boardModel) {
         boardModel
                 .getTiles().stream()
                 .filter(tileModel -> tileModel.getTileStrategy().isInitialTile())
@@ -42,7 +37,7 @@ public class CheckerBoardFillStrategy implements IBoardFillStrategy {
                 .forEach(tile -> {
                     var args = new PieceModelArgs(PieceType.Black, tile.getPosition());
                     var piece = pieceModelFactory.create(args);
-                    tile.setPiece(piece);
+                    tile.setPieces(piece);
                 });
 
         boardModel
@@ -52,7 +47,7 @@ public class CheckerBoardFillStrategy implements IBoardFillStrategy {
                 .forEach(tile -> {
                     var args = new PieceModelArgs(PieceType.White, tile.getPosition());
                     var piece = pieceModelFactory.create(args);
-                    tile.setPiece(piece);
+                    tile.setPieces(piece);
                 });
     }
 

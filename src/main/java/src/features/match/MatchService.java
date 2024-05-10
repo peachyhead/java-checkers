@@ -14,6 +14,7 @@ public class MatchService {
         if (piece == null || piece.getPieceType() != 
                 turn.playerModel().getPieceType()) 
             return;
+        
         if (currentPiece != null)
             currentPiece.select(false);
         currentPiece = piece;
@@ -30,15 +31,17 @@ public class MatchService {
         return new Tuple<>(currentTile, targetTile, haveTarget);
     }
     
+    public void onNewTurn() {
+        currentPiece.select(false);
+        currentPiece = null;
+    }
+    
     public boolean makeMove(Turn turn, String tileID) {
         var tuple = trySetupMove(tileID);
         if (!tuple.z) return false;
         var strategy = currentPiece.getMoveStrategy(tuple.y);
         if (strategy == null) return false;
         strategy.move(turn, tuple.x, tuple.y);
-        
-        currentPiece.select(false);
-        currentPiece = null;
         return true;
     }
 }

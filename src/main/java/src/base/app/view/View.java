@@ -14,10 +14,9 @@ import java.text.MessageFormat;
 
 public abstract class View extends JPanel implements IStorageItem {
     @Getter private final IPositionProvider positionProvider;
-    @Getter private Image view;
     @Setter @Getter 
     private Size customSize;
-    @Setter Color color;
+    @Setter protected Color color;
 
     public View(IPositionProvider provider){
         this.positionProvider = provider;
@@ -29,13 +28,7 @@ public abstract class View extends JPanel implements IStorageItem {
         customSize = size;
     }
 
-    public View(IPositionProvider provider, Size size, Image view){
-        this.positionProvider = provider;
-        this.view = view;
-        customSize = size;
-    }
-    
-    public void setParent(Container container){
+    public void setParent(JPanel container){
         var currentParent = container.getParent();
         if (currentParent != null)
             currentParent.remove(this);
@@ -48,13 +41,13 @@ public abstract class View extends JPanel implements IStorageItem {
         Logger.log(msg, LogType.View);
     }
     
+    protected abstract void setupDebug();
+    
     @Override
     public void paintComponent(Graphics g) {
         var g2d = (Graphics2D) g.create();
-        g2d.setColor(color);
         drawGraphics(g2d);
         g2d.dispose();
-        
 //        var msg = MessageFormat.format("Paint view with ID {0}", getID());
 //        Logger.log(msg, LogType.View);
     }

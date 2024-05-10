@@ -25,9 +25,4 @@ public class BoardModel{
     public void addTile(TileModel tileModel){
         tiles.add(tileModel);
     }
-
-    public TileModel getWithPosition(Position position){
-        return tiles.stream().filter((tileModel -> tileModel.getPosition() == position))
-                .findFirst().get();
-    }
 }

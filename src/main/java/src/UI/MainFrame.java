@@ -1,70 +1,75 @@
 package src.UI;
 
 import lombok.Getter;
-import src.base.Size;
 import src.base.app.view.View;
+import src.base.interfaces.IGameInstaller;
 import src.base.interfaces.IInitializable;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class MainFrame 
-        extends JFrame 
+public class MainFrame extends JFrame 
         implements IInitializable {
+    
     public static final int cellSize = 100;
     public static final int infoPanelWidth = 400;
-    private JPanel contentPanel;
-    @Getter
-    private InfoPanel infoPanel;
+    public static final Color boardColor = new Color(88, 57, 39);
 
-    public MainFrame(Size sideLength){
-        Container parentPane = getContentPane();
-        parentPane.removeAll();
-        parentPane.setBackground(new Color(88,57,39));
-        parentPane.setVisible(true);
-        setLayout(new GridBagLayout());
-        
+    private final IGameInstaller gameInstaller;
+    private BoardView contentPanel;
+    @Getter private GameInfoPanel infoPanel;
+
+    @Override
+    public void initialize() {
+        var sideLength = gameInstaller.getSideLength();
+        var width = sideLength.getX() * cellSize + infoPanelWidth;
+        var height = sideLength.getY() * cellSize + gameInstaller.getYGap();
         setTitle("Ooga booga");
-        setSize(sideLength.getX() * cellSize + infoPanelWidth, 
-                sideLength.getY() * cellSize + 50);
+        setSize(width, height);
         setJMenuBar(new MenuBar());
 
         setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setVisible(true);
-
-        createPanels(sideLength);
-    }
-    
-    public void addView(View view){
-        var size = view.getCustomSize();
-        contentPanel.add(view);
-        view.setPreferredSize(new Dimension(size.getX(), size.getY()));
-        contentPanel.revalidate();
-    }
-
-    @Override
-    public void initialize() {
+        
+        createPanels();
         var timer = new Timer(10, e -> repaint());
         timer.start();
     }
 
-    private void createPanels(Size sideLength) {
+    public MainFrame(IGameInstaller gameInstaller){
+        this.gameInstaller = gameInstaller;
+        
         var parentPane = getContentPane();
-        GridBagConstraints c = new GridBagConstraints();
+        
+        parentPane.removeAll();
+        parentPane.setBackground(boardColor);
+        parentPane.setVisible(true);
+        setLayout(new GridBagLayout());
+        
+        
+    }
+    
+    public void addView(View view) {
+        contentPanel.addView(view);
+    }
+
+    private void createPanels() {
+        var parentPane = getContentPane();
+        var c = new GridBagConstraints();
+        
         c.fill = GridBagConstraints.BOTH;
+        c.insets = new Insets(0, 5, 0, 5);
+        c.weightx = 0;
         c.weighty = 1;
-        contentPanel = new JPanel();
-        contentPanel.setLayout(new GridLayout(sideLength.getX(),sideLength.getY()));
-        contentPanel.setBackground(Color.GRAY);
+        contentPanel = gameInstaller.getBoardView();
         parentPane.add(contentPanel, c);
 
         c.gridx = 1;
-        c.weightx = 1;
-        infoPanel = new InfoPanel();
-        infoPanel.setBackground(Color.GRAY);
-        infoPanel.initialize();
+        c.weightx = 0.2;
+        c.insets = new Insets(0, 0, 0, 5);
+        infoPanel = gameInstaller.getGameInfoPanel();
         parentPane.add(infoPanel, c);
     }
 }

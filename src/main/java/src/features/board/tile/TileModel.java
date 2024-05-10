@@ -9,10 +9,11 @@ import src.features.board.piece.PieceModel;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TileModel implements IStorageItem, IPositionProvider  {
-    @Getter
-    private PieceModel piece;
+    private List<PieceModel> pieces = new ArrayList<>();
     @Getter
     private final Position position;
     @Getter
@@ -26,16 +27,19 @@ public class TileModel implements IStorageItem, IPositionProvider  {
     };
 
     public TileModel(ITileStrategy tileStrategy, Position position){
-        piece = null;
         this.tileStrategy = tileStrategy;
         this.position = position;
     }
 
-    public void setPiece(PieceModel piece){
-        if (havePiece() || piece == null) return;
-        this.piece = piece;
+    public void setPieces(PieceModel piece){
+        if (pieces == null) return;
+        pieces.add(piece);
         piece.setPosition(position);
         onPieceChange.putValue("piece_change", piece);
+    }
+    
+    public PieceModel getPiece(){
+        return pieces.stream().findFirst().get();
     }
 
     public void subscribe(PropertyChangeListener propertyChangeListener){
@@ -43,12 +47,12 @@ public class TileModel implements IStorageItem, IPositionProvider  {
     }
     
     public void resetPiece(){
-        piece = null;
-        onPieceChange.putValue("piece_change", piece);
+        pieces.clear();
+        onPieceChange.putValue("piece_change", null);
     }
     
     public boolean havePiece(){
-        return piece != null;
+        return !pieces.isEmpty();
     }
     
     @Override

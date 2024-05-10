@@ -6,7 +6,6 @@ import src.base.Position;
 import src.base.app.storage.IStorageItem;
 import src.base.interfaces.IPositionProvider;
 import src.features.board.tile.TileModel;
-import src.features.match.IMoveStrategy;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

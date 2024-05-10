@@ -15,7 +15,8 @@ public class PieceViewFactory extends ViewFactory<PieceViewArgs, PieceView> {
 
     @Override
     protected ViewOptions getViewOptions() {
-        return new ViewOptions("src/main/resources/checker/piece.png", new Size(70, 70));
+        return new ViewOptions("src/main/resources/checker/piece.png", 
+                new Size(80, 80));
     }
 
     @Override

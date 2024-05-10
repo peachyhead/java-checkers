@@ -4,13 +4,16 @@ import src.base.signal.SignalBus;
 import src.base.Size;
 import src.base.app.view.View;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class PieceView extends View {
+    private static final int selectionStroke = 3;
+    private static final Color selectionColor = Color.yellow;
+    
     private final PieceModel pieceModel;
+    private int strokeWidth;
     
     public PieceView(PieceModel pieceModel, Size size) {
         super(pieceModel, size);
@@ -26,8 +29,7 @@ public class PieceView extends View {
     public void initialize() {
         pieceModel.onSelected(evt -> {
             var value = (boolean) evt.getNewValue();
-            setBorder(value ? BorderFactory.createLineBorder(Color.yellow) 
-                    : BorderFactory.createEmptyBorder());
+            strokeWidth = value ? selectionStroke : 0;
         });
         
         addMouseListener(new MouseAdapter() {
@@ -40,7 +42,19 @@ public class PieceView extends View {
     }
 
     @Override
+    protected void setupDebug() {
+        
+    }
+
+    @Override
     protected void drawGraphics(Graphics2D g) {
-        g.fillOval(0, 0, getCustomSize().getX(), getCustomSize().getY());
+        if (strokeWidth != 0) {
+            g.setColor(selectionColor);
+            g.fillOval(0, 0, getCustomSize().getX(), getCustomSize().getY());
+        }
+        
+        g.setColor(color);
+        g.fillOval(strokeWidth, strokeWidth, getCustomSize().getX() - strokeWidth * 2, 
+                getCustomSize().getY() - strokeWidth * 2);
     }
 }

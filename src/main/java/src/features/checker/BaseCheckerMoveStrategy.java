@@ -3,7 +3,7 @@ package src.features.checker;
 import src.base.Position;
 import src.features.board.piece.PieceModel;
 import src.features.board.tile.TileModel;
-import src.features.match.IMoveStrategy;
+import src.features.board.piece.IMoveStrategy;
 import src.features.match.Turn;
 
 public abstract class BaseCheckerMoveStrategy implements IMoveStrategy {
@@ -31,7 +31,7 @@ public abstract class BaseCheckerMoveStrategy implements IMoveStrategy {
     public void move(Turn turn, TileModel from, TileModel to) {
         finishMove(turn, to);
         from.resetPiece();
-        to.setPiece(piece);
+        to.setPieces(piece);
     }
     
     protected abstract void finishMove(Turn turn, TileModel to);
