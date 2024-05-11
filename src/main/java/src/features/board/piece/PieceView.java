@@ -36,7 +36,7 @@ public class PieceView extends View {
             @Override
             public void mouseReleased(MouseEvent e) {
                 super.mouseReleased(e);
-                SignalBus.fire("piece_choose", pieceModel.getID());
+                SignalBus.fire("s-piece_choose", pieceModel.getID());
             }
         });
     }

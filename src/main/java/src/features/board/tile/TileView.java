@@ -6,7 +6,6 @@ import src.base.app.view.View;
 import src.base.app.storage.StorageKeeper;
 import src.features.board.piece.PieceModel;
 import src.features.board.piece.PieceView;
-import src.features.narde.TileLayout;
 
 import javax.swing.*;
 import java.awt.*;
@@ -50,7 +49,7 @@ public class TileView extends View {
             @Override
             public void mouseReleased(MouseEvent e) {
                 super.mouseReleased(e);
-                SignalBus.fire("tile_choose", model.getID());
+                SignalBus.fire("s-tile_choose", model.getID());
             }
         });
     }

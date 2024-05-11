@@ -20,7 +20,7 @@ public class TileViewFactory extends ViewFactory<TileViewArgs, TileView> {
 
     @Override
     protected ViewOptions getViewOptions() {
-        return new ViewOptions("src/main/resources/checker/tile.png", 
+        return new ViewOptions("", 
                 new Size(100, 100));
     }
 

@@ -11,8 +11,7 @@ public class CheckerInfoPanel extends GameInfoPanel {
 
     private JTextField playerAScoreField;
     private JTextField playerBScoreField;
-
-
+    
     @Override
     protected GridBagConstraints addComponents(GridBagConstraints consts) {
         playerAScoreField = createPlayerAScore(consts);
@@ -21,8 +20,10 @@ public class CheckerInfoPanel extends GameInfoPanel {
     }
 
     public void subscribeOnNewTurn(Turn turn) {
-        playerAScoreField.setText(MessageFormat.format("{0}", playerA.getAttackCounter()));
-        playerBScoreField.setText(MessageFormat.format("{0}", playerB.getAttackCounter()));
+        if (playerA != null)
+            playerAScoreField.setText("%s".formatted(playerA.getAttackCounter()));
+        if (playerB != null)
+            playerBScoreField.setText("%s".formatted(playerB.getAttackCounter()));
     }
     
     private JTextField createPlayerBScore(GridBagConstraints c) {
