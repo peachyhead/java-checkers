@@ -11,7 +11,9 @@ public final class Turn {
     private final PlayerModel playerModel;
     @Getter @Setter
     private boolean succeed;
-
+    @Getter @Setter
+    private boolean shouldEnd;
+    
     public Turn(int id, PlayerModel playerModel) {
         this.id = id;
         this.playerModel = playerModel;

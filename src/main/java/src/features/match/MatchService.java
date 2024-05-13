@@ -2,8 +2,10 @@ package src.features.match;
 
 import src.base.Tuple;
 import src.base.app.storage.StorageKeeper;
+import src.base.signal.SignalBus;
 import src.features.board.piece.PieceModel;
 import src.features.board.tile.TileModel;
+import src.features.checker.CheckerMoveStrategy;
 
 public class MatchService {
     private PieceModel currentPiece;
@@ -36,12 +38,27 @@ public class MatchService {
         currentPiece = null;
     }
     
-    public boolean makeMove(Turn turn, String tileID) {
+    public void tryMove(Turn turn, String tileID) {
         var tuple = trySetupMove(tileID);
-        if (!tuple.z) return false;
+        if (!tuple.z) return;
         var strategy = currentPiece.getMoveStrategy(tuple.y);
-        if (strategy == null) return false;
+        if (strategy == null) return;
+        
         strategy.move(turn, tuple.x, tuple.y);
-        return true;
+        SignalBus.fire("piece_move", "o");
+    }
+    
+    public boolean checkIfCanMove(Turn turn) {
+        if (turn.isShouldEnd()) return false;
+        var storage = StorageKeeper.getStorage(TileModel.class);
+        for (TileModel tile : storage.getCollection()) {
+            var strategy = currentPiece.getMoveStrategy(tile);
+            if (strategy == null) continue;
+            if (turn.isSucceed() && strategy instanceof CheckerMoveStrategy)
+                continue;
+            
+            return true;
+        }
+        return false;
     }
 }

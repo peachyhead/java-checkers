@@ -1,66 +1,36 @@
 package src.features.checker;
 
-import src.UI.GameInfoPanel;
+import src.UI.BaseInfoPanel;
 import src.features.match.Turn;
 
 import javax.swing.*;
 import java.awt.*;
-import java.text.MessageFormat;
 
-public class CheckerInfoPanel extends GameInfoPanel {
+public class CheckerInfoPanel extends BaseInfoPanel {
 
-    private JTextField playerAScoreField;
-    private JTextField playerBScoreField;
+    private JTextField playerAField;
+    private JTextField playerBField;
     
     @Override
     protected GridBagConstraints addComponents(GridBagConstraints consts) {
-        playerAScoreField = createPlayerAScore(consts);
-        playerBScoreField = createPlayerBScore(consts);
+        consts.gridx = 0;
+        consts.gridy += 1;
+        createField("Player A", consts);
+        consts.gridx = 1;
+        playerAField = createField("0", consts);
+
+        consts.gridx = 0;
+        consts.gridy += 1;
+        createField("Player B", consts);
+        consts.gridx = 1;
+        playerBField = createField("0", consts);
         return consts;
     }
 
     public void subscribeOnNewTurn(Turn turn) {
         if (playerA != null)
-            playerAScoreField.setText("%s".formatted(playerA.getAttackCounter()));
+            playerAField.setText("%s".formatted(playerA.getAttackCounter()));
         if (playerB != null)
-            playerBScoreField.setText("%s".formatted(playerB.getAttackCounter()));
-    }
-    
-    private JTextField createPlayerBScore(GridBagConstraints c) {
-        final JTextField playerBScoreField;
-        var playerBInfo = new JTextField();
-        playerBInfo.setText("Player B score:");
-        playerBInfo.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        playerBInfo.setEditable(false);
-        c.gridx = 0;
-        c.gridy += 1;
-        add(playerBInfo, c);
-
-        playerBScoreField = new JTextField();
-        playerBScoreField.setText("0");
-        playerBScoreField.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        playerBScoreField.setEditable(false);
-        c.gridx = 1;
-        add(playerBScoreField, c);
-        return playerBScoreField;
-    }
-
-    private JTextField createPlayerAScore(GridBagConstraints c) {
-        final JTextField playerAScoreField;
-        var playerAInfo = new JTextField();
-        playerAInfo.setText("Player A score:");
-        playerAInfo.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        playerAInfo.setEditable(false);
-        c.gridx = 0;
-        c.gridy = 2;
-        add(playerAInfo, c);
-
-        playerAScoreField = new JTextField();
-        playerAScoreField.setText("0");
-        playerAScoreField.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        playerAScoreField.setEditable(false);
-        c.gridx = 1;
-        add(playerAScoreField, c);
-        return playerAScoreField;
+            playerBField.setText("%s".formatted(playerB.getAttackCounter()));
     }
 }

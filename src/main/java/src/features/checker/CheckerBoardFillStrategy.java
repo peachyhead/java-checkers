@@ -4,18 +4,11 @@ import src.base.Position;
 import src.base.Size;
 import src.features.board.BaseBoardFillStrategy;
 import src.features.board.piece.PieceModelArgs;
-import src.features.board.piece.PieceModelFactory;
 import src.features.board.piece.PieceType;
 import src.features.board.tile.ITileStrategy;
 import src.features.board.BoardModel;
-import src.features.board.tile.TileModelFactory;
 
 public class CheckerBoardFillStrategy extends BaseBoardFillStrategy {
-    
-    public CheckerBoardFillStrategy(PieceModelFactory pieceModelFactory, 
-                                    TileModelFactory tileModelFactory) {
-        super(pieceModelFactory, tileModelFactory);
-    }
 
     @Override
     public BoardModel fillTiles(Size sideLength){

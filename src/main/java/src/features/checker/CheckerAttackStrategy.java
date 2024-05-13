@@ -9,12 +9,21 @@ import src.features.match.Turn;
 public class CheckerAttackStrategy extends BaseCheckerMoveStrategy {
     
     @Override
-    protected Position getAvailablePosition(Position desiredPosition) {
+    protected boolean isPositionAvailable(Position desiredPosition) {
         var yDirection = piece.getPosition().getY() +
                 (desiredPosition.getY() > piece.getPosition().getY() ? 2 : -2);
         var xDirection = piece.getPosition().getX() +
                 (desiredPosition.getX() > piece.getPosition().getX() ? 2 : -2);
-        return new Position(xDirection, yDirection);
+        
+        var availablePosition = new Position(xDirection, yDirection);
+        var tileStorage = StorageKeeper.getStorage(TileModel.class);
+        var attackedPosition = getAttackedPosition(piece.getPosition(), desiredPosition);
+        var attackedTile = tileStorage.find(attackedPosition.toString());
+        if (attackedTile == null || !attackedTile.havePiece())
+            return false;
+        
+        return availablePosition.toString()
+                .equals(desiredPosition.toString());
     }
     
     @Override

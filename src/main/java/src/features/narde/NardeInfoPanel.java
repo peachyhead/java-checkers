@@ -1,11 +1,11 @@
 package src.features.narde;
 
-import src.UI.GameInfoPanel;
+import src.UI.BaseInfoPanel;
 import src.features.match.Turn;
 
 import java.awt.*;
 
-public class NardeInfoPanel extends GameInfoPanel {
+public class NardeInfoPanel extends BaseInfoPanel {
 
     @Override
     protected GridBagConstraints addComponents(GridBagConstraints consts) {

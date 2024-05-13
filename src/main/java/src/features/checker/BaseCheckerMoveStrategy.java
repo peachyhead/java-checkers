@@ -18,14 +18,14 @@ public abstract class BaseCheckerMoveStrategy implements IMoveStrategy {
     public boolean canMove(TileModel to) {
         if (piece == null) return false;
         if (to.havePiece()) return false;
-        var availablePosition = getAvailablePosition(to.getPosition());
+        if (!isPositionAvailable(to.getPosition())) return false;
+        
         var toID = to.getPosition().toString();
-        var availID = availablePosition.toString();
-        var result = toID.equals(availID);
-        return result;
+        var availID = to.getPosition().toString();
+        return toID.equals(availID);
     }
 
-    protected abstract Position getAvailablePosition(Position desiredPosition);
+    protected abstract boolean isPositionAvailable(Position desiredPosition);
     
     @Override
     public void move(Turn turn, TileModel from, TileModel to) {

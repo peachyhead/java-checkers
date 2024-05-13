@@ -14,8 +14,8 @@ public class SignalBus {
         var msg = MessageFormat.format("Fired signal {0}", key);
         Logger.log(msg, LogType.Signal);
         
-        listeners.stream().filter(listener -> listener.isValid(key))
-                .forEach(listener -> listener.apply(item));
+        var valid = listeners.stream().filter(listener -> listener.isValid(key));
+        valid.forEach(listener -> listener.apply(item));
     }
     
     public static void subscribe(SignalListener signalListener){

@@ -12,11 +12,6 @@ import src.features.board.tile.TileModelFactory;
 
 public class NardeBoardFillStrategy extends BaseBoardFillStrategy {
     
-    public NardeBoardFillStrategy(PieceModelFactory pieceModelFactory, 
-                                  TileModelFactory tileModelFactory) {
-        super(pieceModelFactory, tileModelFactory);
-    }
-
     @Override
     public BoardModel fillTiles(Size sideLength) {
         var boardModel = new BoardModel(sideLength.getX(), sideLength.getY());

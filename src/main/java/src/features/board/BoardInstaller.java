@@ -1,6 +1,7 @@
 package src.features.board;
 
 import lombok.Getter;
+import src.GameResolver;
 import src.UI.MainFrame;
 import src.base.app.storage.Storage;
 import src.base.app.storage.StorageKeeper;
@@ -30,6 +31,9 @@ public class BoardInstaller {
     public static void install(MainFrame frame, StorageKeeper storageKeeper){
         bindPieces(frame, storageKeeper);
         bindTiles(frame, storageKeeper);
+        
+        var boardFillStrategy = GameResolver.getBoardFillStrategy();
+        boardFillStrategy.setFactory(pieceModelFactory, tileModelFactory);
     }
     
     private static void bindPieces(MainFrame mainFrame, StorageKeeper storageKeeper){

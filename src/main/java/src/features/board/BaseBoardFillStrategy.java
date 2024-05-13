@@ -8,10 +8,10 @@ import src.features.board.tile.TileModelArgs;
 import src.features.board.tile.TileModelFactory;
 
 public abstract class BaseBoardFillStrategy {
-    protected final TileModelFactory tileModelFactory;
-    protected final PieceModelFactory pieceModelFactory;
+    protected TileModelFactory tileModelFactory;
+    protected PieceModelFactory pieceModelFactory;
 
-    public BaseBoardFillStrategy(PieceModelFactory pieceModelFactory,
+    public void setFactory(PieceModelFactory pieceModelFactory,
                                     TileModelFactory tileModelFactory) {
         this.pieceModelFactory = pieceModelFactory;
         this.tileModelFactory = tileModelFactory;

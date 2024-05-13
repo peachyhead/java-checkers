@@ -28,14 +28,8 @@ public class TurnResolver {
     }
     
     private PlayerModel decidePlayer(Turn turn) {
-        PlayerModel player;
-        if (turn.isSucceed())
-            player = turn.playerModel();
-        else
-            player = turn.playerModel() == playerA
-                    ? playerB
-                    : playerA;
-        
-        return player;
+        return turn.playerModel() == playerA
+                ? playerB
+                : playerA;
     }
 }
