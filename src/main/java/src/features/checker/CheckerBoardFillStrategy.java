@@ -28,7 +28,7 @@ public class CheckerBoardFillStrategy extends BaseBoardFillStrategy {
                 .filter(tileModel -> tileModel.getTileStrategy().isInitialTile())
                 .filter(tile -> tile.getPosition().getY() < boardModel.getHeight() / 2)
                 .forEach(tile -> {
-                    var args = new PieceModelArgs(PieceType.Black, tile.getPosition());
+                    var args = new PieceModelArgs(PieceType.White, tile.getPosition());
                     var piece = pieceModelFactory.create(args);
                     tile.setPieces(piece);
                 });
@@ -38,7 +38,7 @@ public class CheckerBoardFillStrategy extends BaseBoardFillStrategy {
                 .filter(tileModel -> tileModel.getTileStrategy().isInitialTile())
                 .filter(tile -> tile.getPosition().getY() > boardModel.getHeight() / 2 + 1)
                 .forEach(tile -> {
-                    var args = new PieceModelArgs(PieceType.White, tile.getPosition());
+                    var args = new PieceModelArgs(PieceType.Black, tile.getPosition());
                     var piece = pieceModelFactory.create(args);
                     tile.setPieces(piece);
                 });

@@ -19,7 +19,8 @@ public class CheckerAttackStrategy extends BaseCheckerMoveStrategy {
         var tileStorage = StorageKeeper.getStorage(TileModel.class);
         var attackedPosition = getAttackedPosition(piece.getPosition(), desiredPosition);
         var attackedTile = tileStorage.find(attackedPosition.toString());
-        if (attackedTile == null || !attackedTile.havePiece())
+        if (attackedTile == null || !attackedTile.havePiece() ||
+            attackedTile.getPiece().getPieceType() == piece.getPieceType())
             return false;
         
         return availablePosition.toString()

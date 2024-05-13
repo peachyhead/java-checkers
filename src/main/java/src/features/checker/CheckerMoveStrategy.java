@@ -10,7 +10,7 @@ public class CheckerMoveStrategy extends BaseCheckerMoveStrategy {
     @Override
     protected boolean isPositionAvailable(Position desiredPosition) {
         var yDirection = piece.getPosition().getY() +
-                (piece.getPieceType() == PieceType.Black ? 1 : -1);
+                (piece.getPieceType() == PieceType.White ? 1 : -1);
         var xDirection = piece.getPosition().getX() +
                 (desiredPosition.getX() > piece.getPosition().getX() ? 1 : -1);
         var availablePosition = new Position(xDirection, yDirection);

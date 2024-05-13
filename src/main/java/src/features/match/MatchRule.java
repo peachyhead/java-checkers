@@ -58,9 +58,9 @@ public class MatchRule implements IInitializable {
     
     private void setPlayer() {
         if (playerA == null)
-            playerA = new PlayerModel(PieceType.Black);
+            playerA = new PlayerModel(PieceType.White);
         else if (playerB == null)
-            playerB = new PlayerModel(PieceType.White);
+            playerB = new PlayerModel(PieceType.Black);
     }
     
     private void setupMatch(){
