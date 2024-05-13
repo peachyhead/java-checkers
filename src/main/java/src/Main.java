@@ -17,7 +17,8 @@ public class Main {
         
         var mainFrame = new MainFrame();
         var storageKeeper = new StorageKeeper();
-        BoardInstaller.install(mainFrame, storageKeeper);
+        var boardInstaller = new BoardInstaller();
+        boardInstaller.install(mainFrame, storageKeeper);
         mainFrame.initialize();
 
         SignalBus.fire("s-player_add","1");

@@ -14,12 +14,12 @@ public class StorageMapItem{
         this.value = value;
     }
     
-    public <TKey extends IIdentifiable & IInitializable> Storage<TKey> tryGetValue(Type key) {
+    public <TKey extends IStorageItem> Storage<TKey> tryGetValue(Type key) {
         var success = tryUnlock(key);
         return success ? getValue() : null;
     }
     
-    public <TKey extends IIdentifiable & IInitializable> Storage<TKey> getValue() {
+    public <TKey extends IStorageItem> Storage<TKey> getValue() {
         return (Storage<TKey>) value;
     }
     

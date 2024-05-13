@@ -9,26 +9,12 @@ import src.features.board.piece.*;
 import src.features.board.tile.*;
 
 public class BoardInstaller {
-    @Getter
-    private static Storage<PieceModel> pieceModelStorage;
-    @Getter
-    private static Storage<PieceView> pieceViewStorage;
-    @Getter
-    private static PieceModelFactory pieceModelFactory;
-    @Getter
-    private static PieceViewFactory pieceViewFactory;
     
+    private PieceModelFactory pieceModelFactory;
     @Getter
-    private static Storage<TileModel> tileModelStorage;
-    @Getter
-    private static Storage<TileView> tileViewStorage;
-    @Getter
-    private static TileModelFactory tileModelFactory;
-    @Getter
-    private static TileViewFactory tileViewFactory;
-
-
-    public static void install(MainFrame frame, StorageKeeper storageKeeper){
+    private TileModelFactory tileModelFactory;
+    
+    public void install(MainFrame frame, StorageKeeper storageKeeper){
         bindPieces(frame, storageKeeper);
         bindTiles(frame, storageKeeper);
         
@@ -36,14 +22,14 @@ public class BoardInstaller {
         boardFillStrategy.setFactory(pieceModelFactory, tileModelFactory);
     }
     
-    private static void bindPieces(MainFrame mainFrame, StorageKeeper storageKeeper){
-        pieceModelStorage = new Storage<>();
+    private void bindPieces(MainFrame mainFrame, StorageKeeper storageKeeper){
+        var pieceModelStorage = new Storage<PieceModel>();
         storageKeeper.bindStorage(PieceModel.class, pieceModelStorage);
-        pieceViewStorage = new Storage<>();
+        var pieceViewStorage = new Storage<PieceView>();
         storageKeeper.bindStorage(PieceView.class, pieceViewStorage);
         
         pieceModelFactory = new PieceModelFactory(storageKeeper);
-        pieceViewFactory = new PieceViewFactory(mainFrame, storageKeeper);
+        var pieceViewFactory = new PieceViewFactory(mainFrame, storageKeeper);
 
         pieceModelStorage.onItemAdd(evt -> {
             var pieceModel = (PieceModel) evt.getNewValue();
@@ -61,14 +47,14 @@ public class BoardInstaller {
         });
     }
 
-    private static void bindTiles(MainFrame mainFrame, StorageKeeper storageKeeper){
-        tileModelStorage = new Storage<>();
+    private void bindTiles(MainFrame mainFrame, StorageKeeper storageKeeper){
+        var tileModelStorage = new Storage<TileModel>();
         storageKeeper.bindStorage(TileModel.class, tileModelStorage);
-        tileViewStorage = new Storage<>();
+        var tileViewStorage = new Storage<TileView>();
         storageKeeper.bindStorage(TileView.class, tileViewStorage);
         
         tileModelFactory = new TileModelFactory(storageKeeper);
-        tileViewFactory = new TileViewFactory(mainFrame, storageKeeper);
+        var tileViewFactory = new TileViewFactory(mainFrame, storageKeeper);
 
         tileModelStorage.onItemAdd(evt -> {
             var tileModel = (TileModel) evt.getNewValue();

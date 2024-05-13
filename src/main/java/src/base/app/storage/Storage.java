@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Storage<T extends IIdentifiable & IInitializable> implements IGeneralStorage {
+public class Storage<T extends IStorageItem> implements IGeneralStorage {
     @Getter
     private final List<T> collection = new ArrayList<>();
 
