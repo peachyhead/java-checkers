@@ -3,6 +3,8 @@ package src.features.board.piece;
 import src.base.signal.SignalBus;
 import src.base.Size;
 import src.base.app.view.View;
+import src.features.match.MatchRule;
+import src.features.match.MatchService;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -36,7 +38,8 @@ public class PieceView extends View {
             @Override
             public void mouseReleased(MouseEvent e) {
                 super.mouseReleased(e);
-                SignalBus.fire("s-piece_choose", pieceModel.getID());
+                if (MatchService.getLocalPlayer() == pieceModel.getPieceType())
+                    SignalBus.fire("piece_choose", pieceModel.getID());
             }
         });
     }

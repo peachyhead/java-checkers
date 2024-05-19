@@ -10,6 +10,8 @@ import src.features.board.BoardModel;
 
 public class CheckerBoardFillStrategy extends BaseBoardFillStrategy {
 
+    private int counter;
+
     @Override
     public BoardModel fillTiles(Size sideLength){
         var boardModel = new BoardModel(sideLength.getX(), sideLength.getY());
@@ -23,14 +25,16 @@ public class CheckerBoardFillStrategy extends BaseBoardFillStrategy {
 
     @Override
     public void fillPieces(BoardModel boardModel) {
+        counter = 0;
         boardModel
                 .getTiles().stream()
                 .filter(tileModel -> tileModel.getTileStrategy().isInitialTile())
                 .filter(tile -> tile.getPosition().getY() < boardModel.getHeight() / 2)
                 .forEach(tile -> {
-                    var args = new PieceModelArgs(PieceType.White, tile.getPosition());
+                    var args = new PieceModelArgs(counter, PieceType.White, tile.getPosition());
                     var piece = pieceModelFactory.create(args);
                     tile.setPieces(piece);
+                    counter += 1;
                 });
 
         boardModel
@@ -38,12 +42,15 @@ public class CheckerBoardFillStrategy extends BaseBoardFillStrategy {
                 .filter(tileModel -> tileModel.getTileStrategy().isInitialTile())
                 .filter(tile -> tile.getPosition().getY() > boardModel.getHeight() / 2 + 1)
                 .forEach(tile -> {
-                    var args = new PieceModelArgs(PieceType.Black, tile.getPosition());
+                    var args = new PieceModelArgs(counter, PieceType.Black, tile.getPosition());
                     var piece = pieceModelFactory.create(args);
                     tile.setPieces(piece);
+                    counter += 1;
                 });
+        
+        counter = 0;
     }
-
+    
     @Override
     public ITileStrategy getTileStrategy() {
         return new CheckerTileStrategy();

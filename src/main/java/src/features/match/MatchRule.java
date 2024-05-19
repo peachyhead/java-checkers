@@ -38,13 +38,12 @@ public class MatchRule implements IInitializable {
                 matchService.selectPiece(currentTurn, piece);
         }));
 
-        playerAddListener = new SignalListener<>("s-player_add", (piece -> {
+        playerAddListener = new SignalListener<>("s-player_add", (playerID -> {
             if (playerA != null && playerB != null) return;
             
-            setPlayer();
-            if (playerA != null && playerB != null) {
-                setupMatch();
-            }
+            setPlayers(Integer.parseInt(playerID));
+            matchService.setLocalPlayer(playerA.isLocalPlayer() ? playerA : playerB);
+            setupMatch();
         }));
     }
     
@@ -56,11 +55,9 @@ public class MatchRule implements IInitializable {
         SignalBus.subscribe(pieceMoveListener);
     }
     
-    private void setPlayer() {
-        if (playerA == null)
-            playerA = new PlayerModel(PieceType.White);
-        else if (playerB == null)
-            playerB = new PlayerModel(PieceType.Black);
+    private void setPlayers(int id) {
+        playerA = new PlayerModel(PieceType.White, id == 1);
+        playerB = new PlayerModel(PieceType.Black, id == 2);
     }
     
     private void setupMatch(){

@@ -22,7 +22,7 @@ public class PieceModelFactory
 
     @Override
     public PieceModel create(PieceModelArgs param) {
-        var model = new PieceModel(param.type(), param.position());
+        var model = new PieceModel(param.id(), param.type(), param.position());
         var message = MessageFormat.format("Piece model {0} created!", model.getID());
         Logger.log(message, LogType.Factory);
         

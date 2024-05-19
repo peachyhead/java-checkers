@@ -34,9 +34,9 @@ public class NardeBoardFillStrategy extends BaseBoardFillStrategy {
                 .findFirst().get();
         
         for (int i = 1; i < 16; i++) {
-            var args = new PieceModelArgs(PieceType.Black, headTileBlack.getPosition());
-            var piece = pieceModelFactory.create(args);
-            headTileBlack.setPieces(piece);
+//            var args = new PieceModelArgs(PieceType.Black, headTileBlack.getPosition());
+//            var piece = pieceModelFactory.create(args);
+//            headTileBlack.setPieces(piece);
         }
 
         var headTileWhite = boardModel.getTiles().stream()
@@ -46,9 +46,9 @@ public class NardeBoardFillStrategy extends BaseBoardFillStrategy {
                 .findFirst().get();
 
         for (int i = 1; i < 16; i++) {
-            var args = new PieceModelArgs(PieceType.White, headTileBlack.getPosition());
-            var piece = pieceModelFactory.create(args);
-            headTileWhite.setPieces(piece);
+//            var args = new PieceModelArgs(PieceType.White, headTileBlack.getPosition());
+//            var piece = pieceModelFactory.create(args);
+//            headTileWhite.setPieces(piece);
         }
     }
 

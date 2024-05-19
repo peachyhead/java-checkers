@@ -49,7 +49,7 @@ public class TileView extends View {
             @Override
             public void mouseReleased(MouseEvent e) {
                 super.mouseReleased(e);
-                SignalBus.fire("s-tile_choose", model.getID());
+                SignalBus.fire("tile_choose", model.getID());
             }
         });
     }

@@ -1,20 +1,26 @@
 package src.features.match;
 
+import lombok.Getter;
+import lombok.Setter;
 import src.base.Tuple;
 import src.base.app.storage.StorageKeeper;
 import src.base.signal.SignalBus;
 import src.features.board.piece.PieceModel;
+import src.features.board.piece.PieceType;
 import src.features.board.tile.TileModel;
 import src.features.checker.CheckerMoveStrategy;
+import src.features.player.PlayerModel;
 
 public class MatchService {
+    @Setter
+    private static PlayerModel localPlayer;
     private PieceModel currentPiece;
 
     public void selectPiece(Turn turn, String pieceID) {
         var storage = StorageKeeper.getStorage(PieceModel.class);
         var piece = storage.find(pieceID);
         if (piece == null || piece.getPieceType() != 
-                turn.playerModel().getPieceType()) 
+                turn.playerModel().getPieceType())
             return;
         
         if (currentPiece != null)
@@ -46,6 +52,10 @@ public class MatchService {
         
         strategy.move(turn, tuple.x, tuple.y);
         SignalBus.fire("piece_move", "o");
+    }
+  
+    public static PieceType getLocalPlayer() {
+        return localPlayer.getPieceType();
     }
     
     public boolean checkIfCanMove(Turn turn) {

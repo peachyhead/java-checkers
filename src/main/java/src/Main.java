@@ -15,13 +15,15 @@ public class Main {
         Logger.setAllowedLogs(LogType.Signal);
         MatchInstaller.install();
         
+        var client = new Client();
         var mainFrame = new MainFrame();
         var storageKeeper = new StorageKeeper();
         var boardInstaller = new BoardInstaller();
         boardInstaller.install(mainFrame, storageKeeper);
         mainFrame.initialize();
-
-        SignalBus.fire("s-player_add","1");
-        SignalBus.fire("s-player_add","2");
+        
+        client.launch();
+        client.subscribeToSignal("piece_choose");
+        client.subscribeToSignal("tile_choose");
     }
 }

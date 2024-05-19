@@ -19,7 +19,7 @@ public class PieceModel implements IStorageItem, IPositionProvider {
     private Position position;
     @Getter
     private final PieceType pieceType;
-    private List<IMoveStrategy> moveStrategies = new ArrayList<>();
+    private final List<IMoveStrategy> moveStrategies = new ArrayList<>();
     
     private final Action onSelected = new AbstractAction() {
         @Override
@@ -28,8 +28,8 @@ public class PieceModel implements IStorageItem, IPositionProvider {
         }
     };
     
-    public PieceModel(PieceType pieceType, Position position) {
-        id = java.util.UUID.randomUUID().toString();
+    public PieceModel(int id, PieceType pieceType, Position position) {
+        this.id = String.valueOf(id);
         this.position = position;
         this.pieceType = pieceType;
     }
