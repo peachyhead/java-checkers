@@ -55,8 +55,29 @@ public class Main {
         c.gridy += 1;
         connectionPanel.add(connectionButton, c);
         connectionPanel.revalidate();
-        var client = new Client();
         
+        var client = getClient(connectionButton);
+
+        connectionButton.addActionListener(e -> {
+            InetAddress address;
+            try {
+                address = InetAddress.getByName(addressField.getText());
+                client.launch(address, Integer.parseInt(portField.getText()));
+            } catch (UnknownHostException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+
+        SignalBus.subscribe(new SignalListener<String>(MatchSignals.fromServer(MatchSignals.playerAdd), signal -> {
+            mainFrame.createPanels();
+            contentPane.remove(connectionPanel);
+            PlayerResolver.resolve(signal);
+        }));
+    }
+
+    private static Client getClient(JButton connectionButton) {
+        var client = new Client();
+
         client.subscribeOnConnection(evt -> {
             var status = (int) evt.getNewValue();
             switch (status) {
@@ -74,21 +95,6 @@ public class Main {
                 }
             }
         });
-        
-        connectionButton.addActionListener(e -> {
-            InetAddress address;
-            try {
-                address = InetAddress.getByName(addressField.getText());
-                client.launch(address, Integer.parseInt(portField.getText()));
-            } catch (UnknownHostException ex) {
-                throw new RuntimeException(ex);
-            }
-        });
-
-        SignalBus.subscribe(new SignalListener<String>(MatchSignals.fromServer(MatchSignals.playerAdd), signal -> {
-            mainFrame.createPanels();
-            contentPane.remove(connectionPanel);
-            PlayerResolver.resolve(signal);
-        }));
+        return client;
     }
 }

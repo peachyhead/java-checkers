@@ -62,7 +62,8 @@ public class Client {
     }
     
     public void subscribeToSignal(String signal) {
-        new Thread(() -> {SignalBus.subscribe(new SignalListener<>(signal, receive ->
+        new Thread(() -> { 
+            SignalBus.subscribe(new SignalListener<>(signal, receive ->
                 handler.sendSignal(MessageFormat.format("{0};{1}", signal, receive))));
         }).start();
     }
