@@ -6,6 +6,8 @@ import src.base.app.view.View;
 import src.base.app.storage.StorageKeeper;
 import src.features.board.piece.PieceModel;
 import src.features.board.piece.PieceView;
+import src.features.match.MatchService;
+import src.features.match.MatchSignals;
 
 import javax.swing.*;
 import java.awt.*;
@@ -49,7 +51,8 @@ public class TileView extends View {
             @Override
             public void mouseReleased(MouseEvent e) {
                 super.mouseReleased(e);
-                SignalBus.fire("tile_choose", model.getID());
+                if (MatchService.canMoveCurrentPiece())
+                    SignalBus.fire(MatchSignals.tileChoose, model.getID());
             }
         });
     }

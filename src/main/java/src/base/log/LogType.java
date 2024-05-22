@@ -4,5 +4,6 @@ public enum LogType {
     Factory,
     Storage,
     View,
-    Signal
+    Signal,
+    Server
 }

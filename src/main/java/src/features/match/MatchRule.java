@@ -4,23 +4,21 @@ import src.GameResolver;
 import src.base.signal.SignalBus;
 import src.base.signal.SignalListener;
 import src.base.interfaces.IInitializable;
-import src.features.board.piece.PieceType;
-import src.features.player.PlayerModel;
 
 public class MatchRule implements IInitializable {
-    private PlayerModel playerA;
-    private PlayerModel playerB;
-    
     private Turn currentTurn;
     private TurnResolver turnResolver;
     
     private final SignalListener<String> pieceMoveListener;
     private final SignalListener<String> pieceChooseListener;
     private final SignalListener<String> tileChooseListener;
-    private final SignalListener<String> playerAddListener;
+    private final SignalListener<String> matchStartListener;
     
     public MatchRule(MatchService matchService) {
-        pieceMoveListener = new SignalListener<>("piece_move", (ignored -> {
+        
+        matchStartListener = new SignalListener<>(MatchSignals.matchStart, (ignored -> setupMatch()));
+        
+        pieceMoveListener = new SignalListener<>(MatchSignals.pieceMove, (ignored -> {
             if (currentTurn == null) return;
             if (!matchService.checkIfCanMove(currentTurn)) {
                 currentTurn = turnResolver.resolve(currentTurn);
@@ -28,22 +26,14 @@ public class MatchRule implements IInitializable {
             }
         }));
         
-        tileChooseListener = new SignalListener<>("s-tile_choose", (tile -> {
+        tileChooseListener = new SignalListener<>(MatchSignals.fromServer(MatchSignals.tileChoose), (tile -> {
             if (currentTurn == null) return;
             matchService.tryMove(currentTurn, tile);
         }));
         
-        pieceChooseListener = new SignalListener<>("s-piece_choose", (piece -> {
-            if (currentTurn != null)
-                matchService.selectPiece(currentTurn, piece);
-        }));
-
-        playerAddListener = new SignalListener<>("s-player_add", (playerID -> {
-            if (playerA != null && playerB != null) return;
-            
-            setPlayers(Integer.parseInt(playerID));
-            matchService.setLocalPlayer(playerA.isLocalPlayer() ? playerA : playerB);
-            setupMatch();
+        pieceChooseListener = new SignalListener<>(MatchSignals.fromServer(MatchSignals.pieceChoose), (piece -> {
+            if (currentTurn == null) return;
+            matchService.selectPiece(currentTurn, piece);
         }));
     }
     
@@ -51,19 +41,17 @@ public class MatchRule implements IInitializable {
     public void initialize() {
         SignalBus.subscribe(pieceChooseListener);
         SignalBus.subscribe(tileChooseListener);
-        SignalBus.subscribe(playerAddListener);
         SignalBus.subscribe(pieceMoveListener);
-    }
-    
-    private void setPlayers(int id) {
-        playerA = new PlayerModel(PieceType.White, id == 1);
-        playerB = new PlayerModel(PieceType.Black, id == 2);
+        SignalBus.subscribe(matchStartListener);
     }
     
     private void setupMatch(){
         var viewStrategy = GameResolver.getViewStrategy();
         var boardFillStrategy = GameResolver.getBoardFillStrategy();
         var boardModel = boardFillStrategy.fillTiles(viewStrategy.getSideLength());
+        var playerA = PlayerResolver.getPlayerA();
+        var playerB = PlayerResolver.getPlayerB();
+        
         boardFillStrategy.fillPieces(boardModel);
         viewStrategy.getInfoPanel().initialize(playerA, playerB);
         

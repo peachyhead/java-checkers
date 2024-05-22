@@ -28,7 +28,6 @@ public class MainFrame extends JFrame
         setLocationRelativeTo(null);
         setVisible(true);
         
-        createPanels();
         var timer = new Timer(10, e -> repaint());
         timer.start();
     }
@@ -45,7 +44,7 @@ public class MainFrame extends JFrame
         viewStrategy.getBoardView().addView(view);
     }
 
-    private void createPanels() {
+    public void createPanels() {
         var parentPane = getContentPane();
         var c = new GridBagConstraints();
 

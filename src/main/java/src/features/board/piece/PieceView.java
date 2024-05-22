@@ -5,6 +5,7 @@ import src.base.Size;
 import src.base.app.view.View;
 import src.features.match.MatchRule;
 import src.features.match.MatchService;
+import src.features.match.MatchSignals;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -38,8 +39,8 @@ public class PieceView extends View {
             @Override
             public void mouseReleased(MouseEvent e) {
                 super.mouseReleased(e);
-                if (MatchService.getLocalPlayer() == pieceModel.getPieceType())
-                    SignalBus.fire("piece_choose", pieceModel.getID());
+                if (MatchService.canGrabPiece(pieceModel.getPieceType()))
+                    SignalBus.fire(MatchSignals.pieceChoose, pieceModel.getID());
             }
         });
     }
