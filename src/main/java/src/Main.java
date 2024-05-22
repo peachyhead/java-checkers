@@ -4,7 +4,6 @@ import src.UI.MainFrame;
 import src.base.log.LogType;
 import src.base.log.Logger;
 import src.base.app.storage.StorageKeeper;
-import src.base.signal.SignalBus;
 import src.features.board.BoardInstaller;
 import src.features.match.MatchInstaller;
 

@@ -42,7 +42,7 @@ public class MatchRule implements IInitializable {
             if (playerA != null && playerB != null) return;
             
             setPlayers(Integer.parseInt(playerID));
-            matchService.setLocalPlayer(playerA.isLocalPlayer() ? playerA : playerB);
+            MatchService.setLocalPlayer(playerA.isLocalPlayer() ? playerA : playerB);
             setupMatch();
         }));
     }

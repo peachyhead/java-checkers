@@ -5,10 +5,6 @@ import src.base.interfaces.IViewStrategy;
 import src.features.board.BaseBoardFillStrategy;
 import src.features.checker.CheckerBoardFillStrategy;
 import src.features.checker.CheckerViewStrategy;
-import src.features.narde.NardeBoardFillStrategy;
-import src.features.narde.NardeViewStrategy;
-
-import java.util.Arrays;
 
 public class GameResolver {
     
@@ -21,20 +17,10 @@ public class GameResolver {
     }
     
     private static IViewStrategy resolveViewStrategy(String[] args){
-        return switch (Arrays.stream(args).findFirst().orElse("")){
-            case "checkers" -> new CheckerViewStrategy();
-            case "narde" -> new NardeViewStrategy();
-            default -> throw new IllegalStateException("Can't resolve game: " +
-                    Arrays.stream(args).findFirst().get());
-        };
+        return new CheckerViewStrategy();
     }
 
     private static BaseBoardFillStrategy resolveBoardFillStrategy(String[] args){
-        return switch (Arrays.stream(args).findFirst().orElse("")){
-            case "checkers" -> new CheckerBoardFillStrategy();
-            case "narde" -> new NardeBoardFillStrategy();
-            default -> throw new IllegalStateException("Can't resolve game: " +
-                    Arrays.stream(args).findFirst().get());
-        };
+        return new CheckerBoardFillStrategy();
     }
 }
