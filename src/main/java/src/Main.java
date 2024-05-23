@@ -7,6 +7,7 @@ import src.base.app.storage.StorageKeeper;
 import src.base.signal.SignalBus;
 import src.base.signal.SignalListener;
 import src.features.board.BoardInstaller;
+import src.features.match.GameResolver;
 import src.features.match.MatchInstaller;
 import src.features.match.MatchSignals;
 import src.features.match.PlayerResolver;
@@ -57,7 +58,7 @@ public class Main {
         connectionPanel.revalidate();
         
         var client = getClient(connectionButton);
-
+        
         connectionButton.addActionListener(e -> {
             InetAddress address;
             try {

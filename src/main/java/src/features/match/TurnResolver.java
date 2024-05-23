@@ -1,7 +1,6 @@
 package src.features.match;
 
 import src.base.signal.SignalBus;
-import src.features.player.PlayerModel;
 
 public class TurnResolver {
     private final PlayerModel playerA;

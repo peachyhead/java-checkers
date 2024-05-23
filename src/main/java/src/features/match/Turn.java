@@ -2,7 +2,6 @@ package src.features.match;
 
 import lombok.Getter;
 import lombok.Setter;
-import src.features.player.PlayerModel;
 
 import java.util.Objects;
 

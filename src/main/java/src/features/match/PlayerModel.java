@@ -1,4 +1,4 @@
-package src.features.player;
+package src.features.match;
 
 import lombok.Getter;
 import src.features.board.piece.PieceType;

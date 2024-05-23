@@ -1,6 +1,5 @@
 package src.features.match;
 
-import src.GameResolver;
 import src.base.signal.SignalBus;
 import src.base.signal.SignalListener;
 import src.base.interfaces.IInitializable;

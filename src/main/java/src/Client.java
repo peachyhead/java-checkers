@@ -4,7 +4,6 @@ import src.base.log.LogType;
 import src.base.log.Logger;
 import src.base.signal.SignalBus;
 import src.base.signal.SignalListener;
-import src.features.match.MatchSignals;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

@@ -4,8 +4,9 @@ import src.base.app.storage.StorageKeeper;
 import src.base.signal.SignalBus;
 import src.base.signal.SignalListener;
 import src.features.board.tile.TileView;
+import src.features.match.PlayerResolver;
 import src.features.match.Turn;
-import src.features.player.PlayerModel;
+import src.features.match.PlayerModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -59,8 +60,12 @@ public abstract class BaseInfoPanel extends JPanel {
         setPlayers(playerA, playerB);
         
         SignalBus.subscribe(new SignalListener<Turn>("new_turn", (turn -> {
+            var pointer = turn.playerModel() == PlayerResolver.getLocalPlayer() 
+                    ? "(You)"
+                    : "";
             turnField.setText(MessageFormat.format("{0}", turn.id()));
-            playerField.setText(MessageFormat.format("{0}", turn.playerModel().getPieceType()));
+            playerField.setText(MessageFormat.format("{0}{1}",
+                    turn.playerModel().getPieceType(), pointer));
             subscribeOnNewTurn(turn);
         })));
 

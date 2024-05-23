@@ -1,9 +1,9 @@
 package src.UI;
 
-import src.GameResolver;
 import src.base.app.view.View;
 import src.base.interfaces.IViewStrategy;
 import src.base.interfaces.IInitializable;
+import src.features.match.GameResolver;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,7 +21,6 @@ public class MainFrame extends JFrame
         var windowSize = viewStrategy.getWindowSize();
         setTitle("Ooga booga");
         setSize(windowSize.getX(), windowSize.getY());
-        setJMenuBar(new MenuBar());
 
         setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);

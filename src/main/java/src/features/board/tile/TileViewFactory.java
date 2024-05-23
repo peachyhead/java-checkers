@@ -31,9 +31,6 @@ public class TileViewFactory extends ViewFactory<TileViewArgs, TileView> {
         var color = isAvailable ? AvailableTileColor
                 : UnavailableTileColor;
         var layout = new GridBagLayout();
-        var direction = params.model().getPosition().getY() == 1 
-                ? -1 : 1;
-        //layout.setYDirection(direction);
         view.setColor(color);
         view.setLayout(layout);
         

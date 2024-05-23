@@ -3,7 +3,6 @@ package src.features.match;
 import lombok.Getter;
 import src.base.signal.SignalBus;
 import src.features.board.piece.PieceType;
-import src.features.player.PlayerModel;
 
 public class PlayerResolver {
     @Getter private static PlayerModel localPlayer;

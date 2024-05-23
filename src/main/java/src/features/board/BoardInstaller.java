@@ -1,7 +1,7 @@
 package src.features.board;
 
 import lombok.Getter;
-import src.GameResolver;
+import src.features.match.GameResolver;
 import src.UI.MainFrame;
 import src.base.app.storage.Storage;
 import src.base.app.storage.StorageKeeper;

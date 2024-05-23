@@ -1,4 +1,4 @@
-package src;
+package src.features.match;
 
 import lombok.Getter;
 import src.base.interfaces.IViewStrategy;
